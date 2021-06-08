@@ -2,6 +2,7 @@
   "name": "file-sharer",
   "version": "1.0.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "peerjs": "^1.3.2"
   }
 }
