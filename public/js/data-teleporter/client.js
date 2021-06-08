@@ -1,11 +1,13 @@
 import {createNewPeer} from "./peer.js";
 
 let p = await createNewPeer("");
+const saveAs = window.saveAs;
+let conn;
 
 function connect() {
     const id = document.getElementById("id-text").value;
     const ul = document.getElementById('id-ul');
-    const conn = p.connect(id)
+    conn = p.connect(id)
 
     console.log('lulu')
     conn.on('open', () => {
@@ -13,11 +15,22 @@ function connect() {
         // conn.send(d)
     })
     conn.on('data', (data) => {
-        ul.innerHTML = '';
-        for (let f of data) {
-            let li = document.createElement("li")
-            li.appendChild(document.createTextNode(f))
-            ul.appendChild(li);
+        if (data.file) {
+            let f = new File([data.file], data.name, {type: data.type});
+            saveAs(f, data.name)
+        } else if (data.file_names) {
+            ul.innerHTML = '';
+            for (let f of data.file_names) {
+                let li = document.createElement("li")
+                li.appendChild(document.createTextNode(f))
+
+                let btn = document.createElement("button")
+                btn.setAttribute('onclick', `getFile('${f}')`)
+                btn.appendChild(document.createTextNode('Download'))
+
+                li.appendChild(btn);
+                ul.appendChild(li);
+            }
         }
     })
     conn.on('close', () => {
@@ -26,4 +39,11 @@ function connect() {
     })
 }
 
+function getFile(name) {
+    if (conn.open) {
+        conn.send(name)
+    }
+}
+
 window.connect = connect;
+window.getFile = getFile;
