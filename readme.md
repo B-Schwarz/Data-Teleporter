@@ -1,4 +1,4 @@
-# File Portal
+# Data Teleporter
 
 File Portal is a Web Application used to share files from one device to another.
 
