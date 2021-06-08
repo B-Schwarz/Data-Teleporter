@@ -5,25 +5,27 @@ export async function createNewPeer(id) {
     if (String(id) && id.length > 0) {
         peerID = id;
     } else {
-        let temp = await fetch('/api/uuid').then((d) => {return d.json()})
+        let temp = await fetch('/api/uuid').then((d) => {
+            return d.json()
+        })
         peerID = temp.id
     }
 
     let Peer = window.Peer;
 
-    let h = window.location.host;
-    h = h.substring(0, h.length - 5)
+    let _port = 80;
 
-    console.log('Peer ID: ' + peerID)
+    if (window.location.port) {
+        _port = window.location.port
+    } else if (window.location.protocol === 'https:') {
+        _port = 443
+    }
 
     let p = new Peer(peerID, {
-        host: h,
-        port: 3000,
+        host: window.location.hostname,
+        port: _port,
         path: '/api/peer/'
     });
-
-    console.log(p.id)
-    console.log(p.options)
 
     return p;
 }

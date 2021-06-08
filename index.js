@@ -1,6 +1,5 @@
 const express = require('express');
 const {ExpressPeerServer} = require("peer");
-const {PeerServer} = require("peer");
 const app = express();
 
 const {v4: uuidv4} = require('uuid');
