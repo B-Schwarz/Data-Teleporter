@@ -1,7 +1,7 @@
-# Data Teleporter
+# Void Share
 
 
-Data Teleporter is a Web Application used to share files from one device to another.
+Void Share is a Web Application used to share files from one device to another.
 
 ### Goal
 
